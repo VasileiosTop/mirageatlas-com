@@ -1,27 +1,7 @@
-/**
- * POST /api/waitlist
- *
- * Cloudflare Pages Function. Stores a waitlist signup in a KV namespace
- * bound to this Pages project as `WAITLIST`.
- *
- * KV key layout:
- *   email:<lowercased-email>       -> JSON { email, games, submittedAt, ipHashPrefix }
- *   ip:<hash-prefix>:<ymd>         -> counter (for per-IP daily rate limit)
- *   total                          -> incrementing integer (for quick stats)
- *
- * Required binding (set in Cloudflare Pages → Settings → Functions →
- * KV namespace bindings):
- *   Variable name: WAITLIST
- *   KV namespace:  (whichever you created, e.g. "mirage-atlas-waitlist")
- *
- * Free tier is more than enough: 1,000 KV writes/day covers ~30k signups/month.
- */
-
 interface Env {
   WAITLIST: KVNamespace;
+  ASSETS: Fetcher;
 }
-
-type Ctx = EventContext<Env, string, Record<string, unknown>>;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_EMAIL_LEN = 254;
@@ -29,9 +9,6 @@ const MAX_GAMES_LEN = 200;
 const PER_IP_DAILY_LIMIT = 5;
 
 async function ipHashPrefix(ip: string): Promise<string> {
-  // Truncated SHA-256 of the raw IP — stored so we can rate-limit without
-  // retaining the IP itself. 10 hex chars = ~40 bits of entropy, more than
-  // enough to distinguish residential addresses for a day.
   const data = new TextEncoder().encode(`mirage-atlas-ip::${ip}`);
   const digest = await crypto.subtle.digest('SHA-256', data);
   return Array.from(new Uint8Array(digest))
@@ -55,8 +32,10 @@ function jsonResponse(body: unknown, status = 200, extraHeaders: Record<string, 
   });
 }
 
-export const onRequestPost = async (ctx: Ctx): Promise<Response> => {
-  const { request, env } = ctx;
+async function handleWaitlist(request: Request, env: Env): Promise<Response> {
+  if (request.method !== 'POST') {
+    return jsonResponse({ error: 'Method not allowed.' }, 405, { Allow: 'POST' });
+  }
 
   if (!env.WAITLIST) {
     return jsonResponse(
@@ -65,16 +44,16 @@ export const onRequestPost = async (ctx: Ctx): Promise<Response> => {
     );
   }
 
-  let body: { email?: string; games?: string; company?: string } = {};
+  let body: { email?: string; games?: string; company?: string; website?: string } = {};
   try {
     body = await request.json();
   } catch {
     return jsonResponse({ error: 'Invalid JSON body.' }, 400);
   }
 
-  // Honeypot. Anything in `company` means a bot filled the hidden field.
-  if (body.company && body.company.length > 0) {
-    return jsonResponse({ message: "You're on the list. We'll be in touch on launch day." });
+  const honeypot = body.company ?? body.website ?? '';
+  if (honeypot && honeypot.length > 0) {
+    return jsonResponse({ ok: true, message: "You're on the list. We'll be in touch on launch day." });
   }
 
   const email = String(body.email ?? '').trim().toLowerCase();
@@ -97,8 +76,7 @@ export const onRequestPost = async (ctx: Ctx): Promise<Response> => {
   const emailKey = `email:${email}`;
   const existing = await env.WAITLIST.get(emailKey);
   if (existing) {
-    // Idempotent — treat as success, don't reveal membership.
-    return jsonResponse({ message: "You're already on the list. We'll be in touch on launch day." });
+    return jsonResponse({ ok: true, message: "You're already on the list. We'll be in touch on launch day." });
   }
 
   const record = {
@@ -115,7 +93,6 @@ export const onRequestPost = async (ctx: Ctx): Promise<Response> => {
     env.WAITLIST.put(rateKey, String(rateCount + 1), { expirationTtl: 60 * 60 * 36 }),
   ]);
 
-  // Best-effort counter; don't fail the request if this errors.
   try {
     const totalRaw = await env.WAITLIST.get('total');
     const total = totalRaw ? Number.parseInt(totalRaw, 10) || 0 : 0;
@@ -124,8 +101,15 @@ export const onRequestPost = async (ctx: Ctx): Promise<Response> => {
     /* ignore */
   }
 
-  return jsonResponse({ message: "You're on the list. We'll email you the day TestFlight opens." });
-};
+  return jsonResponse({ ok: true, message: "You're on the list. We'll email you the day TestFlight opens." });
+}
 
-export const onRequest = async (): Promise<Response> =>
-  jsonResponse({ error: 'Method not allowed.' }, 405, { Allow: 'POST' });
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
+    if (url.pathname === '/api/waitlist') {
+      return handleWaitlist(request, env);
+    }
+    return env.ASSETS.fetch(request);
+  },
+};
