@@ -1,0 +1,326 @@
+---
+import Layout from '~/layouts/Layout.astro';
+
+const features = [
+  {
+    title: 'Truly on-device',
+    body: 'Powered by a 4-billion-parameter model that runs entirely on your phone. No cloud, no servers, no internet required after the one-time download.',
+    icon: 'offline',
+  },
+  {
+    title: 'Built for gacha depth',
+    body: 'Grounded in structured knowledge of characters, weapons, echoes, banners, and team synergies. Every answer cites its source so you can double-check.',
+    icon: 'depth',
+  },
+  {
+    title: 'Private by architecture',
+    body: "We can't see your questions because we never receive them. No accounts, no telemetry, no training on your queries. Ever.",
+    icon: 'shield',
+  },
+];
+
+const trustBadges = [
+  '100% offline after install',
+  'No accounts required',
+  'No ads, no tracking',
+  'Open-licence data, attributed',
+];
+
+const faqs = [
+  {
+    q: 'Is Mirage Atlas really offline?',
+    a: "Yes. Once you've downloaded the app and its model pack, every question runs against an AI model on your device. You can put your phone in airplane mode and everything still works. The only time the app uses the network is to fetch optional game-data updates — and even those are read-only downloads, never uploads.",
+  },
+  {
+    q: 'Which games are supported at launch?',
+    a: 'Neverness to Everness is the launch title. We are designing Mirage Atlas so additional games roll in as downloadable data packs — no new app, no new install. Which game arrives next is driven by waitlist signal: tell us what you play.',
+  },
+  {
+    q: 'How big is the download?',
+    a: 'The app itself is small (~30 MB). The on-device AI model is ~2.5 GB and downloads once on first launch over Wi-Fi. Each supported-game data pack is under 20 MB.',
+  },
+  {
+    q: 'What phones does it run on?',
+    a: 'iOS 16 and later on A14 Bionic or newer (iPhone 12 onward). Android 11+ with at least 8 GB of RAM. We block devices that cannot run the model cleanly rather than ship a degraded experience.',
+  },
+  {
+    q: 'Is it free?',
+    a: 'Version 1.0 is free to install and use. If we add paid features later (deep theorycraft, premium packs) the core experience — ask, answer, plan — stays free.',
+  },
+  {
+    q: 'How accurate is the AI?',
+    a: 'Every answer is grounded against a structured-fact database that we curate, not just the raw model. If a question cannot be grounded, the app says so instead of guessing. We would rather miss than mislead.',
+  },
+  {
+    q: 'Where does the game data come from?',
+    a: 'Community wikis (Fandom, CC-BY-SA 3.0) and official patch notes. We extract only structured facts — stats, traits, kit data — and attribute sources in-app. We never republish prose or community-authored lore.',
+  },
+  {
+    q: 'When does it launch?',
+    a: "We're targeting an iOS beta in May 2026 via TestFlight, with an Android build following shortly after. Join the waitlist and you'll hear first when TestFlight opens.",
+  },
+];
+---
+
+<Layout>
+  <!-- Top bar -->
+  <header class="absolute inset-x-0 top-0 z-20">
+    <nav class="container-page flex items-center justify-between py-6">
+      <a href="/" class="flex items-center gap-2 font-display text-lg font-semibold">
+        <span class="inline-block h-7 w-7 rounded-lg bg-gradient-to-br from-atlas-400 to-atlas-700 shadow-glow"></span>
+        Mirage Atlas
+      </a>
+      <div class="flex items-center gap-3 text-sm">
+        <a href="#features" class="hidden text-ink-300 hover:text-white sm:inline">Features</a>
+        <a href="#faq" class="hidden text-ink-300 hover:text-white sm:inline">FAQ</a>
+        <a href="#waitlist" class="btn-primary text-xs">Join the waitlist</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden pt-32 pb-24 sm:pt-40 sm:pb-32">
+    <div class="container-page text-center">
+      <span class="eyebrow mb-8 animate-fade-up">In beta for Neverness to Everness</span>
+      <h1 class="mx-auto max-w-4xl text-5xl font-bold leading-[1.05] tracking-tight text-white sm:text-6xl md:text-7xl animate-fade-up" style="animation-delay:60ms">
+        Every gacha answer.
+        <span class="bg-gradient-to-r from-atlas-300 via-atlas-400 to-atlas-200 bg-clip-text text-transparent">None of your data.</span>
+      </h1>
+      <p class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-ink-200 animate-fade-up" style="animation-delay:120ms">
+        Mirage Atlas is an offline AI companion for gacha players. Ask about characters, plan banners, draft team comps — fully on-device. Nothing you say or build ever leaves your phone.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-3 animate-fade-up" style="animation-delay:180ms">
+        <a href="#waitlist" class="btn-primary">Join the waitlist</a>
+        <a href="#features" class="btn-ghost">How it works</a>
+      </div>
+
+      <ul class="mx-auto mt-16 flex max-w-3xl flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs text-ink-400 animate-fade-up" style="animation-delay:240ms">
+        {trustBadges.map((b) => (
+          <li class="flex items-center gap-2">
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-3.5 w-3.5 text-atlas-400"><path fill="currentColor" d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2Z"/></svg>
+            <span>{b}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="relative py-24">
+    <div class="container-page">
+      <div class="max-w-2xl">
+        <span class="eyebrow">Why on-device</span>
+        <h2 class="mt-4 text-3xl font-bold text-white sm:text-4xl">Fast. Private. Honest by design.</h2>
+        <p class="mt-4 text-ink-300">
+          Cloud gacha bots trade your query history for their answer. Mirage Atlas flips that tradeoff by running the model on your phone — so speed, privacy, and accountability become architectural, not promissory.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {features.map((f) => (
+          <article class="card p-7">
+            <div class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-atlas-500/15 text-atlas-300">
+              {f.icon === 'offline' && (
+                <svg viewBox="0 0 24 24" class="h-5 w-5"><path fill="currentColor" d="M12 20a8 8 0 1 1 0-16 8 8 0 0 1 0 16Zm-1-4.6 6-6-1.4-1.4L11 12.6 8.4 10 7 11.4l4 4Z"/></svg>
+              )}
+              {f.icon === 'depth' && (
+                <svg viewBox="0 0 24 24" class="h-5 w-5"><path fill="currentColor" d="M3 5h18v2H3V5Zm2 4h14v2H5V9Zm-2 4h18v2H3v-2Zm2 4h14v2H5v-2Z"/></svg>
+              )}
+              {f.icon === 'shield' && (
+                <svg viewBox="0 0 24 24" class="h-5 w-5"><path fill="currentColor" d="M12 2 4 5v7c0 5 3.5 9.2 8 10 4.5-.8 8-5 8-10V5l-8-3Z"/></svg>
+              )}
+            </div>
+            <h3 class="mt-5 text-lg font-semibold text-white">{f.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-300">{f.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="relative py-24">
+    <div class="container-page">
+      <div class="grid items-start gap-12 lg:grid-cols-[1fr_1.2fr]">
+        <div>
+          <span class="eyebrow">How it works</span>
+          <h2 class="mt-4 text-3xl font-bold text-white sm:text-4xl">Four steps, one of them offline-forever.</h2>
+          <p class="mt-4 text-ink-300">
+            Setup is once. After that, your phone is the whole stack.
+          </p>
+        </div>
+
+        <ol class="space-y-4">
+          {[
+            { n: '01', t: 'Install', b: 'Download Mirage Atlas from the App Store or Play Store.' },
+            { n: '02', t: 'Pick your games', b: 'Neverness to Everness at launch. More packs roll in as downloadable updates.' },
+            { n: '03', t: 'Download the model', b: 'One-time, ~2.5 GB, Wi-Fi only. After this, you can go offline forever.' },
+            { n: '04', t: 'Ask anything', b: 'Type or speak your question. Answers cite their sources. Nothing uploads.' },
+          ].map((s) => (
+            <li class="card flex gap-6 p-6">
+              <div class="font-display text-2xl font-bold text-atlas-300">{s.n}</div>
+              <div>
+                <h3 class="font-semibold text-white">{s.t}</h3>
+                <p class="mt-1 text-sm text-ink-300">{s.b}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Waitlist -->
+  <section id="waitlist" class="relative py-24">
+    <div class="container-page">
+      <div class="mx-auto max-w-2xl rounded-3xl border border-atlas-500/30 bg-gradient-to-br from-atlas-500/10 via-ink-900/60 to-ink-950 p-10 shadow-glow">
+        <span class="eyebrow">Launching May 2026</span>
+        <h2 class="mt-4 text-3xl font-bold text-white">Be first in line.</h2>
+        <p class="mt-3 text-ink-300">
+          Drop your email and we'll send you the TestFlight invite the day it opens. One email. At launch. That's it.
+        </p>
+
+        <form id="waitlist-form" class="mt-8 space-y-3" novalidate>
+          <label class="block text-left">
+            <span class="text-sm font-medium text-ink-200">Email</span>
+            <input
+              type="email"
+              name="email"
+              required
+              autocomplete="email"
+              placeholder="you@example.com"
+              class="mt-2 block w-full rounded-xl border border-ink-700/80 bg-ink-950/60 px-4 py-3 text-sm text-white placeholder-ink-400 transition focus:border-atlas-400 focus:outline-none"
+            />
+          </label>
+
+          <label class="block text-left">
+            <span class="text-sm font-medium text-ink-200">Which games do you play? <span class="text-ink-400">(optional — helps us prioritise)</span></span>
+            <input
+              type="text"
+              name="games"
+              maxlength="200"
+              placeholder="e.g. Neverness to Everness, Wuthering Waves…"
+              class="mt-2 block w-full rounded-xl border border-ink-700/80 bg-ink-950/60 px-4 py-3 text-sm text-white placeholder-ink-400 transition focus:border-atlas-400 focus:outline-none"
+            />
+          </label>
+
+          <!-- honeypot -->
+          <input type="text" name="company" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
+          <button type="submit" class="btn-primary w-full">Get launch-day access →</button>
+
+          <p id="waitlist-message" class="mt-2 hidden text-sm" role="status" aria-live="polite"></p>
+
+          <p class="pt-2 text-xs text-ink-400">
+            We store your email on Cloudflare (UK) and send exactly one message at launch. No newsletters, no third-party sharing.
+            <a href="/privacy" class="underline hover:text-ink-200">Privacy policy</a>.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="relative py-24">
+    <div class="container-page max-w-3xl">
+      <span class="eyebrow">FAQ</span>
+      <h2 class="mt-4 text-3xl font-bold text-white sm:text-4xl">Questions worth asking.</h2>
+
+      <div class="mt-10 divide-y divide-ink-800/80">
+        {faqs.map((f) => (
+          <details class="group py-5">
+            <summary class="flex cursor-pointer list-none items-start justify-between gap-6">
+              <span class="font-display text-lg font-semibold text-white">{f.q}</span>
+              <svg class="mt-1 h-5 w-5 flex-shrink-0 text-ink-300 transition group-open:rotate-45" viewBox="0 0 24 24"><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2Z"/></svg>
+            </summary>
+            <p class="mt-3 text-ink-300">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-ink-800/80 py-12 mt-12">
+    <div class="container-page grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div>
+        <div class="flex items-center gap-2 font-display text-lg font-semibold">
+          <span class="inline-block h-7 w-7 rounded-lg bg-gradient-to-br from-atlas-400 to-atlas-700"></span>
+          Mirage Atlas
+        </div>
+        <p class="mt-3 max-w-sm text-sm text-ink-400">
+          An offline AI companion for gacha players. Built by <a href="https://mirageinteractive.uk" class="text-ink-200 hover:text-white">Mirage Interactive Ltd</a>.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-semibold text-white">Product</h4>
+        <ul class="mt-4 space-y-2 text-sm text-ink-400">
+          <li><a href="#features" class="hover:text-white">Features</a></li>
+          <li><a href="#faq" class="hover:text-white">FAQ</a></li>
+          <li><a href="#waitlist" class="hover:text-white">Waitlist</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-semibold text-white">Company &amp; legal</h4>
+        <ul class="mt-4 space-y-2 text-sm text-ink-400">
+          <li><a href="https://mirageinteractive.uk" class="hover:text-white">Mirage Interactive Ltd</a></li>
+          <li><a href="/privacy" class="hover:text-white">Privacy</a></li>
+          <li><a href="/support" class="hover:text-white">Support</a></li>
+          <li><a href="mailto:support@mirageatlas.com" class="hover:text-white">support@mirageatlas.com</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container-page mt-12 flex flex-col gap-3 border-t border-ink-800/80 pt-6 text-xs text-ink-500 sm:flex-row sm:items-center sm:justify-between">
+      <p>&copy; 2026 Mirage Interactive Ltd. All rights reserved.</p>
+      <p>Built in the United Kingdom.</p>
+    </div>
+  </footer>
+
+  <script is:inline>
+    (function () {
+      const form = document.getElementById('waitlist-form');
+      const msg = document.getElementById('waitlist-message');
+      if (!form || !msg) return;
+
+      const setMsg = (text, tone) => {
+        msg.textContent = text;
+        msg.classList.remove('hidden', 'text-red-400', 'text-emerald-300', 'text-ink-300');
+        msg.classList.add(tone === 'ok' ? 'text-emerald-300' : tone === 'err' ? 'text-red-400' : 'text-ink-300');
+      };
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(form));
+        if (data.company) return; // honeypot tripped
+
+        const email = String(data.email || '').trim();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          setMsg('Please enter a valid email address.', 'err');
+          return;
+        }
+
+        setMsg('Submitting…', 'info');
+
+        try {
+          const res = await fetch('/api/waitlist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, games: data.games || '' }),
+          });
+          const body = await res.json().catch(() => ({}));
+          if (res.ok) {
+            setMsg(body.message || "You're on the list. We'll be in touch on launch day.", 'ok');
+            form.reset();
+          } else {
+            setMsg(body.error || 'Something went wrong. Please try again.', 'err');
+          }
+        } catch {
+          setMsg('Network error. Please try again.', 'err');
+        }
+      });
+    })();
+  </script>
+</Layout>

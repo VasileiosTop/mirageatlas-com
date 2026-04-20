@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  body {
+    @apply bg-ink-950 text-ink-100 antialiased selection:bg-atlas-500/40 selection:text-white;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(61, 92, 255, 0.18), transparent),
+      radial-gradient(ellipse 60% 40% at 110% 20%, rgba(129, 92, 255, 0.08), transparent);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3 {
+    @apply font-display tracking-tight;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-atlas-400 ring-offset-2 ring-offset-ink-950 rounded-sm;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-6 sm:px-8;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full
+           bg-atlas-500 px-6 py-3 text-sm font-semibold text-white
+           shadow-glow transition
+           hover:bg-atlas-400 active:bg-atlas-600
+           focus-visible:ring-atlas-300;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full
+           border border-ink-700/80 bg-ink-900/60 px-6 py-3 text-sm font-semibold text-ink-100
+           transition hover:border-atlas-400 hover:text-white;
+  }
+
+  .card {
+    @apply rounded-2xl border border-ink-800/80 bg-ink-900/60 backdrop-blur-sm;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-atlas-500/30
+           bg-atlas-500/10 px-3 py-1 text-xs font-medium tracking-wide text-atlas-200
+           uppercase;
+  }
+}

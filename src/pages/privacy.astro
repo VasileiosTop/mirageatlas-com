@@ -1,0 +1,51 @@
+---
+import Layout from '~/layouts/Layout.astro';
+
+const lastUpdated = 'April 2026';
+---
+
+<Layout
+  title="Privacy — Mirage Atlas"
+  description="How Mirage Atlas handles data. Short version: it doesn't."
+  canonical="https://mirageatlas.com/privacy"
+>
+  <main class="container-page py-20">
+    <a href="/" class="text-sm text-ink-400 hover:text-white">&larr; Home</a>
+    <h1 class="mt-6 font-display text-4xl font-bold text-white sm:text-5xl">Privacy policy</h1>
+    <p class="mt-3 text-sm text-ink-400">Last updated: {lastUpdated}</p>
+
+    <div class="prose prose-invert mt-10 max-w-2xl space-y-6 text-ink-200">
+      <h2 class="text-2xl font-semibold text-white">The short version</h2>
+      <p>Mirage Atlas is designed so that your questions and your notes never leave your device. We do not have servers that receive your prompts. We do not log usage. We do not train on your data because we do not have your data.</p>
+
+      <h2 class="text-2xl font-semibold text-white">What we collect on our website</h2>
+      <p>If you submit the waitlist form on this site, we store:</p>
+      <ul class="list-disc space-y-1 pl-6">
+        <li>The email address you provide.</li>
+        <li>An optional free-text list of the games you play (so we can prioritise which game packs to build next).</li>
+        <li>The timestamp of your submission and a truncated IP hash used only to rate-limit abuse. The raw IP is not stored.</li>
+      </ul>
+      <p>This data is stored in Cloudflare KV (United Kingdom data centre). We send exactly one email at launch day and then delete the list. You can request removal at any time by emailing <a href="mailto:privacy@mirageatlas.com" class="text-atlas-200 hover:text-white">privacy@mirageatlas.com</a>.</p>
+
+      <h2 class="text-2xl font-semibold text-white">What the app collects</h2>
+      <p>Nothing leaves your device by default. The app does not include third-party analytics SDKs, advertising SDKs, crash reporters, or attribution tooling at launch.</p>
+      <p>If a future release needs to make a network call (for example, to download an updated game data pack), it will be explicit in the UI, and the request will contain no personal data beyond what is strictly necessary to fetch the resource.</p>
+
+      <h2 class="text-2xl font-semibold text-white">What we never do</h2>
+      <ul class="list-disc space-y-1 pl-6">
+        <li>We never sell, rent, or share your email with third parties.</li>
+        <li>We never send marketing emails beyond the single launch notification.</li>
+        <li>We never use your waitlist signup for anything other than notifying you when Mirage Atlas is available.</li>
+      </ul>
+
+      <h2 class="text-2xl font-semibold text-white">Cookies &amp; analytics</h2>
+      <p>This website does not set tracking cookies. We may use Cloudflare Web Analytics, which is cookie-free and stores only aggregate hit counts by path and country.</p>
+
+      <h2 class="text-2xl font-semibold text-white">Your rights (UK GDPR)</h2>
+      <p>You have the right to access, correct, or delete any personal data we hold about you. Email <a href="mailto:privacy@mirageatlas.com" class="text-atlas-200 hover:text-white">privacy@mirageatlas.com</a> with the address you signed up with and we'll respond within 30 days.</p>
+
+      <h2 class="text-2xl font-semibold text-white">Controller &amp; contact</h2>
+      <p>The data controller is Mirage Interactive Ltd, registered in England and Wales. Contact: <a href="mailto:privacy@mirageatlas.com" class="text-atlas-200 hover:text-white">privacy@mirageatlas.com</a>.</p>
+    </div>
+  </main>
+</Layout>
