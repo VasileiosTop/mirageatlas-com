@@ -1,0 +1,8 @@
+name = "mirageatlas-com"
+pages_build_output_dir = "dist"
+compatibility_date = "2025-04-01"
+
+[[kv_namespaces]]
+binding = "WAITLIST"
+id = "4e63a861d429488d84288d59192c2d53"
+preview_id = "5ca12211dcca434082eede39c8e4440b"
