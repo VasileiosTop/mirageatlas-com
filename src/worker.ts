@@ -107,9 +107,16 @@ async function handleWaitlist(request: Request, env: Env): Promise<Response> {
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
+
+    if (url.hostname === 'www.mirageatlas.com') {
+      url.hostname = 'mirageatlas.com';
+      return Response.redirect(url.toString(), 301);
+    }
+
     if (url.pathname === '/api/waitlist') {
       return handleWaitlist(request, env);
     }
+
     return env.ASSETS.fetch(request);
   },
 };
